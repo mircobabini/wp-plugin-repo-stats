@@ -32,7 +32,7 @@ unzip the archive and place the PHP file 'wp_plugin_repo_stats.php' in your wp-c
 
 Use a shortcode to call the plugin from any page or post like this:
 
-[plugin-repo-stat uid="your userid" rounded="false" cachetime="3600"]
+[plugin-repo-stats uid="your userid" rounded="false" cachetime="3600"]
 
 This will:
 <ul>
