@@ -57,7 +57,7 @@ Leave out a parameter to use the default.
 
 = How can I style the output? =
 
-The output contains extensive CSS classes you can target in your style.css. You can style alternating rows, or style each table column. Here is some sample CSS you can use:
+The output contains extensive CSS classes you can target in your style.css. You can style alternating rows, or style each table column. Here is some sample CSS you can use. This will duplicate the screenshot you see above.
 
 `.wpprs {margin:20px}
 .wpprs-rounded-corners{-moz-border-radius:10px;-webkit-border-radius:10px;border-radius:10px}
@@ -71,6 +71,8 @@ The output contains extensive CSS classes you can target in your style.css. You 
 .wpprs-table .wpprs-evenrow {background:#efefef}`
 
 == Screenshots ==
+
+1. Sample screenshot
 
 == Changelog ==
 
