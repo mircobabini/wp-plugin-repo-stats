@@ -11,6 +11,8 @@ Plugin developers can list their plugins and download counts from wordpress.org.
 
 == Description ==
 
+<strong>Are you a WordPress plugin developer who wants to show off how many plugins you have in the repo and how many times they've been downloaded?</strong> Then look no further.
+
 This plugin lists all of the plugins you have made available on wordpress.org. Using a shortcode on posts or pages, it creates a table listing each plugin and how many downloads it has.
 
 Inspired by http://www.viper007bond.com/wordpress-plugins/wordpress-download-counter/ and modeled after http://lesterchan.net/portfolio/programming/php/
@@ -19,8 +21,7 @@ If you use and enjoy this plugin, please rate it and click the "Works" button be
 
 == Installation ==
 
-1. Upload 'wp_plugin_repo_stats.zip' through the WordPress interface (http://www.yourblogurl.com/wp-admin/plugin-install.php?tab=upload), or
-unzip the archive and place the PHP file 'wp_plugin_repo_stats.php' in your wp-content/plugins folder.
+1. Upload 'wp_plugin_repo_stats.zip' through the WordPress interface (http://www.yourblogurl.com/wp-admin/plugin-install.php?tab=upload), or unzip the archive and place the PHP file 'wp_plugin_repo_stats.php' in your wp-content/plugins folder.
 
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 
@@ -57,7 +58,7 @@ Leave out a parameter to use the default.
 
 = How can I style the output? =
 
-The output contains extensive CSS classes you can target in your style.css. You can style alternating rows, or style each table column. Here is some sample CSS you can use. This will duplicate the screenshot you see above.
+The output contains extensive CSS classes you can target in your style.css. You can style alternating rows, or style each table column. Here is some sample CSS you can use. This will duplicate the layout of the screenshot.
 
 `.wpprs {margin:20px}
 .wpprs-rounded-corners{-moz-border-radius:10px;-webkit-border-radius:10px;border-radius:10px}
