@@ -33,7 +33,7 @@ If you use and enjoy this plugin, please rate it and click the "Works" button be
 
 Use a shortcode to call the plugin from any page or post like this:
 
-[plugin-repo-stats uid="your userid" rounded="false" cachetime="3600"]
+[plugin-repo-stats uid="your userid" cachetime="3600"]
 
 This will:
 <ul>
