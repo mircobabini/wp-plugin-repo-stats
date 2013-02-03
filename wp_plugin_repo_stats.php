@@ -1,16 +1,16 @@
 <?php
 /*
 Plugin Name: WordPress Plugin Repo Stats
-Plugin URI: http://www.jimmyscode.com/
-Description: Plugin developers -- display the names and download counts for your WordPress plugins in a CSS-stylable table.
-Version: 0.0.1
+Plugin URI: http://www.jimmyscode.com/wordpress/wp-plugin-repo-stats/
+Description: Plugin developers -- display the names and download counts for your WordPress plugins in a CSS-stylable table. Includes plugin ratings.
+Version: 0.0.2
 Author: Jimmy Pena
 Author URI: http://www.jimmyscode.com/
 Contributors: jp2112
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NRHAAC7Q9Q2X6
 Tags: plugin, count, download, table
 Requires at least: 3.5
-Tested up to: 3.5
+Tested up to: 3.5.1
 License: GPL3
 License URI: http://www.gnu.org/licenses/gpl.html
 */
@@ -32,12 +32,14 @@ License URI: http://www.gnu.org/licenses/gpl.html
 
 add_shortcode('plugin-repo-stats', 'wpprs');
 function wpprs($atts) {
+	wpprs_styles();
+
   // get parameters
   extract( shortcode_atts( array(
 			'uid' => '',
       'nofollow' => 'true',
 			'rounded' => 'true',
-			'cachetime' => '43200'
+			'cachetime' => '3600'
       ), $atts ) );
 	// variables used throughout
 	$querypath = '//div[@class="info-group plugin-theme main-plugins"]//';
@@ -83,6 +85,23 @@ function wpprs($atts) {
     for ($i = 0; $i < $plugincount; $i++) {
       array_push($indivnames, $h3Content->item($i)->nodeValue);
     }
+		
+		// visit each plugin URL and get star count
+		$starcounts = array();
+		$querypath = '//div[@class="star-holder"]//';
+		for ($i = 0; $i < $plugincount; $i++) {
+			$response = wp_remote_retrieve_body(wp_remote_get($indivurls[$i]));
+			if (is_wp_error($response)) {
+				array_push($starcounts, 'width: 0px');
+			} else {
+				// parse HTML response
+				$dom = new DOMDocument();
+				$dom->loadHTML($response);
+				$xpath = new DOMXPath($dom);
+				$starholder = $xpath->query($querypath . 'div');
+				array_push($starcounts, $starholder->item(0)->getAttribute('style'));
+			}
+		}
 
     // start formatting output
     $output = '<div class="wpprs">';
@@ -91,10 +110,10 @@ function wpprs($atts) {
     $output .= 'The number of times my <span class="wpprs-plugincount">' . $plugincount . '</span> WordPress plugins have been downloaded according to the official <a href="http://wordpress.org/extend/plugins/">WordPress Plugins Repository</a>.';
     $output .= '</div> <!-- end wpprs-top -->';
     $output .= '<div class="wpprs-body">';
-		$output .= '<h3>My WordPress Plugins</h3>';
+		$output .= '<h3 class="wp-logo">My WordPress Plugins</h3>';
     $output .= '<table class="wpprs-table">';
     $output .= '<thead>';
-    $output .= '<tr><th class="wpprs-headindex">#</th><th class="wpprs-headname">Plugin Name</th><th class="wpprs-headcount">Download Count</th></tr>';
+    $output .= '<tr><th class="wpprs-headindex">#</th><th class="wpprs-headname">Plugin Name</th><th class="wpprs-headcount">Download Count</th><th class="wpprs-headrating">Rating</th></tr>';
     $output .= '</thead>';
     $output .= '<tbody>';
     // loop through arrays and print URL, name and count for each plugin
@@ -106,6 +125,9 @@ function wpprs($atts) {
       $output .= '<td class="wpprs-name"><a' . ($nofollow ? ' rel="nofollow" ' : ' ') . 'href="' . $indivurls[$i] . '">' . $indivnames[$i] . '</a></td>';
       // download count for that plugin
 			$output .= '<td class="wpprs-count">' . $indivcounts[$i] . '</td>';
+			// star rating
+			$output .= '<td class="wpprs-rating"><div class="star-holder"><div class="star-rating" style="' . $starcounts[$i] . '"></div></div></td>';
+			// end row
 			$output .= '</tr>';
     }
     // finish output
@@ -119,5 +141,17 @@ function wpprs($atts) {
     $output = get_transient($transient_name);
   }
 	return $output;
+}
+// -------------------------------------------------------------------
+// CSS file queueing
+// -------------------------------------------------------------------
+function wpprs_styles() {
+  wp_register_style( 'wpprs_style', 
+    plugins_url('wp-plugin-repo-stats/wp_plugin_repo_stats.css'), 
+    array(), 
+    "0.0.1", 
+    'all' );
+  // enqueueing:
+  wp_enqueue_style( 'wpprs_style' );
 }
 ?>
