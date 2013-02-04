@@ -21,7 +21,7 @@ If you use and enjoy this plugin, please rate it and click the "Works" button be
 
 == Installation ==
 
-1. Upload 'wp_plugin_repo_stats.zip' through the WordPress interface (http://www.yourblogurl.com/wp-admin/plugin-install.php?tab=upload), or unzip the archive and place the PHP file 'wp_plugin_repo_stats.php' in your wp-content/plugins folder.
+1. Upload plugin through the WordPress interface.
 
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 
