@@ -14,7 +14,6 @@ define('WPPRS_PLUGIN_NAME', 'WordPress Plugin Repo Stats');
 define('WPPRS_SLUG', 'wp-plugin-repo-stats');
 define('WPPRS_LOCAL', 'wpprs');
 define('WPPRS_OPTION', 'wpprs');
-define('WPPRS_DEBUG_MODE', true);
 /* default values */
 define('WPPRS_DEFAULT_ENABLED', true);
 define('WPPRS_DEFAULT_NOFOLLOW', true);
@@ -211,13 +210,8 @@ function wpprs($atts) {
     }
     wpprs_styles();
     $querypath = '//div[@class="info-group plugin-theme main-plugins"]//';
-		if (!WPPRS_DEBUG_MODE) {
-			$transient_name = 'wpprs_count_' . $uid;
-			$response = get_transient($transient_name);
-    } else {
-			$response = false;
-		}
-		
+		$transient_name = 'wpprs_count_' . $uid;
+		$response = get_transient($transient_name);
     if (!$response) { // regenerate and cache
       // get wordpress plugin stats page html
       $response = wp_remote_retrieve_body(wp_remote_get('http://profiles.wordpress.org/' . $uid . '/'));
