@@ -1,26 +1,56 @@
-.wpprs {margin:20px}
-.wpprs-rounded-corners{-moz-border-radius:10px;-khtml-border-radius:10px;-webkit-border-radius:10px;border-radius:10px}
-.wpprs-top {padding:18px;background:#efefef;text-align:center}
-.wpprs-top h2 {font-size:48px}
-.wpprs-plugincount {font-weight:bold}
-.wpprs-body h3 {margin:25px 0;line-height:50px}
-.wpprs-table {width:90%}
-.wpprs-table th {text-align:left}
-.wpprs-table td {border-top:1px solid #efefef;border-bottom:1px solid #efefef}
-.wpprs-table .wpprs-evenrow {background:#efefef}
-
+.wpprs {
+  margin:20px
+}
+.wpprs-rounded-corners{
+  -moz-border-radius:10px;
+  -khtml-border-radius:10px;
+  -webkit-border-radius:10px;
+  border-radius:10px
+}
+.wpprs-top {
+  padding:18px;
+  background:#efefef;
+  text-align:center
+}
+.wpprs-top h2 {
+  font-size:48px
+}
+.wpprs-plugincount {
+  font-weight:bold
+}
+.wpprs-body h3 {
+  margin:25px 0;
+  line-height:50px
+}
+.wpprs-table {
+  width:90%
+}
+.wpprs-table th {
+  text-align:left
+}
+.wpprs-table td {
+  border-top:1px solid #efefef;
+  border-bottom:1px solid #efefef
+}
+.wpprs-table .wpprs-evenrow {
+  background:#efefef
+}
+h3.wp-logo {
+  background:url(../images/wordpress_icon.png) no-repeat top left;
+  padding:0 0 0 50px
+}
+/* CSS star positioning */
 div.star-holder {
-position: relative;
-height: 17px;
-width: 92px;
-background: url(../images/stars.png) repeat-x bottom left;
+  position: relative;
+  height: 17px;
+  width: 92px;
+  background: url(../images/stars.png) repeat-x bottom left;
 }
 div.star-holder .star-rating {
-background: url(../images/stars.png) repeat-x top left;
-height: 17px;
-float: left;
-text-indent: 100%;
-overflow: hidden;
-white-space: nowrap;
+  background: url(../images/stars.png) repeat-x top left;
+  height: 17px;
+  float: left;
+  text-indent: 100%;
+  overflow: hidden;
+  white-space: nowrap;
 }
-h3.wp-logo {background:url(../images/wordpress_icon.png) no-repeat top left;padding:0 0 0 50px}
