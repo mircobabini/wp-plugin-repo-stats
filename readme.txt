@@ -130,6 +130,9 @@ Add this to your functions.php:
 
 == Changelog ==
 
+= 0.0.7 =
+rollback sanitation
+
 = 0.0.6 =
 - sanitize some inputs to reduce attack vectors
 - added donate link on admin page
@@ -160,6 +163,9 @@ added stars rating, WP logo, changed default cache time to one hour
 created
 
 == Upgrade Notice ==
+
+= 0.0.7 =
+rollback sanitation
 
 = 0.0.6 =
 - sanitize some inputs to reduce attack vectors
