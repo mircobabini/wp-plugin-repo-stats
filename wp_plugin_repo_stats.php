@@ -3,13 +3,13 @@
 Plugin Name: WordPress Plugin Repo Stats
 Plugin URI: http://www.jimmyscode.com/wordpress/wp-plugin-repo-stats/
 Description: Plugin developers -- display the names and download counts for your WordPress plugins in a CSS-stylable table. Includes plugin ratings.
-Version: 0.0.5
+Version: 0.0.6
 Author: Jimmy Pe&ntilde;a
 Author URI: http://www.jimmyscode.com/
 License: GPLv2 or later
 */
 // plugin constants
-define('WPPRS_VERSION', '0.0.5');
+define('WPPRS_VERSION', '0.0.6');
 define('WPPRS_PLUGIN_NAME', 'WordPress Plugin Repo Stats');
 define('WPPRS_SLUG', 'wp-plugin-repo-stats');
 define('WPPRS_LOCAL', 'wpprs');
@@ -57,6 +57,7 @@ function wpprs_translation_file() {
 add_action('admin_init', 'wpprs_options_init');
 function wpprs_options_init() {
   register_setting('wpprs_options', WPPRS_OPTION);
+	register_wpprs_admin_style();
 }
 // add Settings sub-menu
 add_action('admin_menu', 'wpprs_plugin_menu');
@@ -79,52 +80,51 @@ function wpprs_page() {
       <?php settings_fields('wpprs_options'); ?>
       <?php $options = wpprs_getpluginoptions(); ?>
       <?php update_option(WPPRS_OPTION, $options); ?>
-      <table class="form-table">
-        <tr valign="top"><th scope="row"><strong><label for="wpprs[<?php echo WPPRS_DEFAULT_ENABLED_NAME; ?>]"><?php _e('Plugin enabled?', WPPRS_LOCAL); ?></label></strong></th>
-		<td><input type="checkbox" id="wpprs[<?php echo WPPRS_DEFAULT_ENABLED_NAME; ?>]" name="wpprs[<?php echo WPPRS_DEFAULT_ENABLED_NAME; ?>]" value="1" <?php checked('1', $options[WPPRS_DEFAULT_ENABLED_NAME]); ?> /></td>
+      <table class="form-table" id="theme-options-wrap">
+        <tr valign="top"><th scope="row"><strong><label title="<?php _e('Is plugin enabled? Uncheck this to turn it off temporarily.', WPPRS_LOCAL); ?>" for="wpprs[<?php echo WPPRS_DEFAULT_ENABLED_NAME; ?>]"><?php _e('Plugin enabled?', WPPRS_LOCAL); ?></label></strong></th>
+					<td><input type="checkbox" id="wpprs[<?php echo WPPRS_DEFAULT_ENABLED_NAME; ?>]" name="wpprs[<?php echo WPPRS_DEFAULT_ENABLED_NAME; ?>]" value="1" <?php checked('1', $options[WPPRS_DEFAULT_ENABLED_NAME]); ?> /></td>
         </tr>
-	  <tr valign="top"><td colspan="2"><?php _e('Is plugin enabled? Uncheck this to turn it off temporarily.', WPPRS_LOCAL); ?></td></tr>
-        <tr valign="top"><th scope="row"><strong><label for="wpprs[<?php echo WPPRS_DEFAULT_UID_NAME; ?>]"><?php _e('WordPress.org Userid', WPPRS_LOCAL); ?></label></strong></th>
-		<td><input type="text" id="wpprs[<?php echo WPPRS_DEFAULT_UID_NAME; ?>]" name="wpprs[<?php echo WPPRS_DEFAULT_UID_NAME; ?>]" value="<?php echo $options[WPPRS_DEFAULT_UID_NAME]; ?>" style="width:200px" /></td>
+				<tr valign="top"><td colspan="2"><?php _e('Is plugin enabled? Uncheck this to turn it off temporarily.', WPPRS_LOCAL); ?></td></tr>
+				<tr valign="top"><th scope="row"><strong><label title="<?php _e('Enter your wordpress.org userid.', WPPRS_LOCAL); ?>" for="wpprs[<?php echo WPPRS_DEFAULT_UID_NAME; ?>]"><?php _e('WordPress.org Userid', WPPRS_LOCAL); ?></label></strong></th>
+					<td><input type="text" id="wpprs[<?php echo WPPRS_DEFAULT_UID_NAME; ?>]" name="wpprs[<?php echo WPPRS_DEFAULT_UID_NAME; ?>]" value="<?php echo $options[WPPRS_DEFAULT_UID_NAME]; ?>" /></td>
         </tr>
-	  <tr valign="top"><td colspan="2"><?php _e('Enter your wordpress.org userid.', WPPRS_LOCAL); ?></td></tr>
-        <tr valign="top"><th scope="row"><strong><label for="wpprs[<?php echo WPPRS_DEFAULT_NOFOLLOW_NAME; ?>]"><?php _e('Nofollow plugin link(s)?', WPPRS_LOCAL); ?></label></strong></th>
-		<td><input type="checkbox" id="wpprs[<?php echo WPPRS_DEFAULT_NOFOLLOW_NAME; ?>]" name="wpprs[<?php echo WPPRS_DEFAULT_NOFOLLOW_NAME; ?>]" value="1" <?php checked('1', $options[WPPRS_DEFAULT_NOFOLLOW_NAME]); ?> /></td>
+				<tr valign="top"><td colspan="2"><?php _e('Enter your wordpress.org userid.', WPPRS_LOCAL); ?></td></tr>
+        <tr valign="top"><th scope="row"><strong><label title="<?php _e('Check this box to add rel=nofollow to WP plugin repo links.', WPPRS_LOCAL); ?>" for="wpprs[<?php echo WPPRS_DEFAULT_NOFOLLOW_NAME; ?>]"><?php _e('Nofollow plugin link(s)?', WPPRS_LOCAL); ?></label></strong></th>
+					<td><input type="checkbox" id="wpprs[<?php echo WPPRS_DEFAULT_NOFOLLOW_NAME; ?>]" name="wpprs[<?php echo WPPRS_DEFAULT_NOFOLLOW_NAME; ?>]" value="1" <?php checked('1', $options[WPPRS_DEFAULT_NOFOLLOW_NAME]); ?> /></td>
         </tr>
-	  <tr valign="top"><td colspan="2"><?php _e('Check this box to add rel="nofollow" to WP plugin repo links.', WPPRS_LOCAL); ?></td></tr>
-        <tr valign="top"><th scope="row"><strong><label for="wpprs[<?php echo WPPRS_DEFAULT_ROUNDED_NAME; ?>]"><?php _e('Rounded corner CSS?', WPPRS_LOCAL); ?></label></strong></th>
-		<td><input type="checkbox" id="wpprs[<?php echo WPPRS_DEFAULT_ROUNDED_NAME; ?>]" name="wpprs[<?php echo WPPRS_DEFAULT_ROUNDED_NAME; ?>]" value="1" <?php checked('1', $options[WPPRS_DEFAULT_ROUNDED_NAME]); ?> /></td>
+				<tr valign="top"><td colspan="2"><?php _e('Check this box to add rel="nofollow" to WP plugin repo links.', WPPRS_LOCAL); ?></td></tr>
+				<tr valign="top"><th scope="row"><strong><label title="<?php _e('Check this box to use rounded corner CSS on the table header.', WPPRS_LOCAL); ?>" for="wpprs[<?php echo WPPRS_DEFAULT_ROUNDED_NAME; ?>]"><?php _e('Rounded corner CSS?', WPPRS_LOCAL); ?></label></strong></th>
+					<td><input type="checkbox" id="wpprs[<?php echo WPPRS_DEFAULT_ROUNDED_NAME; ?>]" name="wpprs[<?php echo WPPRS_DEFAULT_ROUNDED_NAME; ?>]" value="1" <?php checked('1', $options[WPPRS_DEFAULT_ROUNDED_NAME]); ?> /></td>
         </tr>
-	  <tr valign="top"><td colspan="2"><?php _e('Check this box to use rounded corner CSS on the table header.', WPPRS_LOCAL); ?></td></tr>
-        <tr valign="top"><th scope="row"><strong><label for="wpprs[<?php echo WPPRS_DEFAULT_SHOW_STARS_NAME; ?>]"><?php _e('Show plugin ratings?', WPPRS_LOCAL); ?></label></strong></th>
-		<td><input type="checkbox" id="wpprs[<?php echo WPPRS_DEFAULT_SHOW_STARS_NAME; ?>]" name="wpprs[<?php echo WPPRS_DEFAULT_SHOW_STARS_NAME; ?>]" value="1" <?php checked('1', $options[WPPRS_DEFAULT_SHOW_STARS_NAME]); ?> /></td>
+				<tr valign="top"><td colspan="2"><?php _e('Check this box to use rounded corner CSS on the table header.', WPPRS_LOCAL); ?></td></tr>
+        <tr valign="top"><th scope="row"><strong><label title="<?php _e('Check this box to show plugin star ratings.', WPPRS_LOCAL); ?>" for="wpprs[<?php echo WPPRS_DEFAULT_SHOW_STARS_NAME; ?>]"><?php _e('Show plugin ratings?', WPPRS_LOCAL); ?></label></strong></th>
+					<td><input type="checkbox" id="wpprs[<?php echo WPPRS_DEFAULT_SHOW_STARS_NAME; ?>]" name="wpprs[<?php echo WPPRS_DEFAULT_SHOW_STARS_NAME; ?>]" value="1" <?php checked('1', $options[WPPRS_DEFAULT_SHOW_STARS_NAME]); ?> /></td>
         </tr>
-	  <tr valign="top"><td colspan="2"><?php _e('Check this box to show plugin star ratings.', WPPRS_LOCAL); ?></td></tr>
-    <tr valign="top"><th scope="row"><strong><label for="wpprs[<?php echo WPPRS_DEFAULT_CACHETIME_NAME; ?>]"><?php _e('Cache time (seconds)', WPPRS_LOCAL); ?></label></strong></th>
-		  <td><input type="text" id="wpprs[<?php echo WPPRS_DEFAULT_CACHETIME_NAME; ?>]" name="wpprs[<?php echo WPPRS_DEFAULT_CACHETIME_NAME; ?>]" value="<?php echo $options[WPPRS_DEFAULT_CACHETIME_NAME]; ?>" style="width:200px" /></td>
-    </tr>
-	  <tr valign="top"><td colspan="2"><?php _e('Enter time in seconds between cache refreshes. Default is <strong>' . WPPRS_DEFAULT_CACHETIME . '</strong> seconds, minimum is <strong>' . WPPRS_MIN_CACHE_TIME . '</strong> seconds.', WPPRS_LOCAL); ?></td></tr>
-    <tr valign="top"><th scope="row"><strong><label for="wpprs[<?php echo WPPRS_DEFAULT_SORT_NAME; ?>]"><?php _e('Default sort order', WPPRS_LOCAL); ?></label></strong></th>
-			<td><select id="wpprs[<?php echo WPPRS_DEFAULT_SORT_NAME; ?>]" name="wpprs[<?php echo WPPRS_DEFAULT_SORT_NAME; ?>]">
-        <?php $orders = explode(",", WPPRS_AVAILABLE_SORT);
+				<tr valign="top"><td colspan="2"><?php _e('Check this box to show plugin star ratings.', WPPRS_LOCAL); ?></td></tr>
+				<tr valign="top"><th scope="row"><strong><label title="<?php _e('Enter time in seconds between cache refreshes. Default is ' . WPPRS_DEFAULT_CACHETIME . ' seconds, minimum is ' . WPPRS_MIN_CACHE_TIME . ' seconds.', WPPRS_LOCAL); ?>" for="wpprs[<?php echo WPPRS_DEFAULT_CACHETIME_NAME; ?>]"><?php _e('Cache time (seconds)', WPPRS_LOCAL); ?></label></strong></th>
+					<td><input type="number" min="<?php echo WPPRS_MIN_CACHE_TIME; ?>" id="wpprs[<?php echo WPPRS_DEFAULT_CACHETIME_NAME; ?>]" name="wpprs[<?php echo WPPRS_DEFAULT_CACHETIME_NAME; ?>]" value="<?php echo $options[WPPRS_DEFAULT_CACHETIME_NAME]; ?>" /></td>
+				</tr>
+				<tr valign="top"><td colspan="2"><?php _e('Enter time in seconds between cache refreshes. Default is <strong>' . WPPRS_DEFAULT_CACHETIME . '</strong> seconds, minimum is <strong>' . WPPRS_MIN_CACHE_TIME . '</strong> seconds.', WPPRS_LOCAL); ?></td></tr>
+
+				<tr valign="top"><th scope="row"><strong><label title="<?php _e('Select the sort order. Default is ascending (by plugin name).', WPPRS_LOCAL); ?>" for="wpprs[<?php echo WPPRS_DEFAULT_SORT_NAME; ?>]"><?php _e('Default sort order', WPPRS_LOCAL); ?></label></strong></th>
+					<td><select id="wpprs[<?php echo WPPRS_DEFAULT_SORT_NAME; ?>]" name="wpprs[<?php echo WPPRS_DEFAULT_SORT_NAME; ?>]">
+					<?php $orders = explode(",", WPPRS_AVAILABLE_SORT);
           foreach($orders as $order) {
 						echo '<option value="' . $order . '" ' . selected($order, $options[WPPRS_DEFAULT_SORT_NAME]) . '>' . $order . '</option>';
           } ?>
-        </select></td>
-    </tr>
-	  <tr valign="top"><td colspan="2"><?php _e('Select the sort order. Default is ascending (by plugin name).', WPPRS_LOCAL); ?></td></tr>
-        <tr valign="top"><th scope="row"><strong><label for="wpprs[<?php echo WPPRS_DEFAULT_NEWWINDOW_NAME; ?>]"><?php _e('Open links in new window?', WPPRS_LOCAL); ?></label></strong></th>
-		<td><input type="checkbox" id="wpprs[<?php echo WPPRS_DEFAULT_NEWWINDOW_NAME; ?>]" name="wpprs[<?php echo WPPRS_DEFAULT_NEWWINDOW_NAME; ?>]" value="1" <?php checked('1', $options[WPPRS_DEFAULT_NEWWINDOW_NAME]); ?> /></td>
+					</select></td>
+				</tr>
+				<tr valign="top"><td colspan="2"><?php _e('Select the sort order. Default is ascending (by plugin name).', WPPRS_LOCAL); ?></td></tr>
+        <tr valign="top"><th scope="row"><strong><label title="<?php _e('Check this box to open links in a new window. target="_blank" will be added to all links', WPPRS_LOCAL); ?>" for="wpprs[<?php echo WPPRS_DEFAULT_NEWWINDOW_NAME; ?>]"><?php _e('Open links in new window?', WPPRS_LOCAL); ?></label></strong></th>
+					<td><input type="checkbox" id="wpprs[<?php echo WPPRS_DEFAULT_NEWWINDOW_NAME; ?>]" name="wpprs[<?php echo WPPRS_DEFAULT_NEWWINDOW_NAME; ?>]" value="1" <?php checked('1', $options[WPPRS_DEFAULT_NEWWINDOW_NAME]); ?> /></td>
         </tr>
-	  <tr valign="top"><td colspan="2"><?php _e('Check this box to open links in a new window.', WPPRS_LOCAL); ?></td></tr>
+				<tr valign="top"><td colspan="2"><?php _e('Check this box to open links in a new window. target="_blank" will be added to all links', WPPRS_LOCAL); ?></td></tr>
       </table>
-      <p class="submit">
-      <input type="submit" class="button-primary" value="<?php _e('Save Changes', WPPRS_LOCAL); ?>" />
-      </p>
+      <?php submit_button(); ?>
     </form>
     <h2>Support</h2>
-    <div style="background:#eff;border:1px solid gray;padding:20px">
-    If you like this plugin, please <a href="http://wordpress.org/extend/plugins/<?php echo WPPRS_SLUG; ?>/">rate it on WordPress.org</a> and click the "Works" button so others know it will work for your WordPress version. For support please visit the <a href="http://wordpress.org/support/plugin/<?php echo WPPRS_SLUG; ?>">forums</a>.
+    <div class="support">
+    If you like this plugin, please <a href="http://wordpress.org/extend/plugins/<?php echo WPPRS_SLUG; ?>/">rate it on WordPress.org</a> and click the "Works" button so others know it will work for your WordPress version. For support please visit the <a href="http://wordpress.org/support/plugin/<?php echo WPPRS_SLUG; ?>">forums</a>. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EX9NB9TLFHVW"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="Donate with PayPal" title="Donate with PayPal" width="92" height="26" /></a>
     </div>
   </div>
   <?php  
@@ -312,23 +312,23 @@ function wpprs($atts) {
         $pluginurl = '<a' . ($opennewwindow ? ' target="_blank" ' : ' ') . ($nofollow ? ' rel="nofollow" ' : ' ') . 'href="' . $outputarray[$i][1] . '">' . $outputarray[$i][0] . '</a>';
         $output .= '<td class="wpprs-name">' . $pluginurl . '</td>';
         // download count for that plugin
-	  $output .= '<td class="wpprs-count">' . $outputarray[$i][2] . '</td>';
-	  // star rating
+				$output .= '<td class="wpprs-count">' . $outputarray[$i][2] . '</td>';
+				// star rating
         if ($showstars) {
-        // get stars width from 'width: ##px'
-        $starswidth = explode(":", $outputarray[$i][3]);
-        $starswidth = $starswidth[1];
-	  $starswidth = explode("px", $starswidth);
-        $starswidth = $starswidth[0];
-        if ($starswidth > 0) {
-          $starswidth = round($starswidth / 18.4, 2);
-        } else {
-          $starswidth = 0;
-        }
-	    $output .= '<td class="wpprs-rating"><div title="' . $starswidth . ' out of 5 stars' . ((bool)$starswidth ? '' : ' or rating not available') .'" class="star-holder"><div class="star-rating" style="' . $outputarray[$i][3] . '"></div></div></td>';
-        }
-	  // end row
-	  $output .= '</tr>';
+					// get stars width from 'width: ##px'
+					$starswidth = explode(":", $outputarray[$i][3]);
+					$starswidth = $starswidth[1];
+					$starswidth = explode("px", $starswidth);
+					$starswidth = $starswidth[0];
+					if ($starswidth > 0) {
+						$starswidth = round($starswidth / 18.4, 2);
+					} else {
+						$starswidth = 0;
+					}
+					$output .= '<td class="wpprs-rating"><div title="' . $starswidth . ' out of 5 stars' . ((bool)$starswidth ? '' : ' or rating not available') .'" class="star-holder"><div class="star-rating" style="' . $outputarray[$i][3] . '"></div></div></td>';
+				}
+				// end row
+				$output .= '</tr>';
       }
       // finish output
       $output .= '</tbody>';
@@ -344,9 +344,9 @@ function wpprs($atts) {
     $output = '<!-- ' . WPPRS_PLUGIN_NAME . ': plugin is disabled. Check Settings page. -->';
   }
   if ($show) {
-    echo $output;
+    echo esc_html($output);
   } else {
-    return $output;
+    return esc_html($output);
   }
 }
 // show admin messages to plugin user
@@ -356,7 +356,7 @@ function wpprs_showAdminMessages() {
   global $pagenow;
   if (current_user_can('manage_options')) { // user has privilege
     if ($pagenow == 'options-general.php') {
-      if ($_GET['page'] == WPPRS_SLUG) { // we are on settings page
+      if (sanitize_text_field($_GET['page']) == WPPRS_SLUG) { // we are on settings page
         $options = wpprs_getpluginoptions(); // get_option(WPPRS_OPTION); // don't use encapsulated function here
         if ($options) {
 					$enabled = (bool)$options[WPPRS_DEFAULT_ENABLED_NAME];
@@ -370,6 +370,19 @@ function wpprs_showAdminMessages() {
 			}
     } // end page check
   } // end privilege check
+}
+
+// add admin CSS if we are on the plugin options page
+add_action('admin_head', 'insert_wpprs_admin_css');
+function insert_wpprs_admin_css() {
+	global $pagenow;
+	if (current_user_can('manage_options')) {
+		if ($pagenow == 'options-general.php') {
+			if (sanitize_text_field($_GET['page']) == WPPRS_SLUG) {
+				wpprs_admin_styles();
+			}
+		}
+	}
 }
 // http://bavotasan.com/2009/a-settings-link-for-your-wordpress-plugins/
 // Add settings link on plugin page
@@ -389,6 +402,18 @@ function register_wpprs_style() {
     WPPRS_VERSION, 
     'all' );
 }
+
+function wpprs_admin_styles() {
+	wp_enqueue_style('wpprs_admin_style');
+}
+function register_wpprs_admin_style() {
+	wp_register_style( 'wpprs_admin_style',
+		plugins_url(plugin_basename(dirname(__FILE__)) . '/css/admin.css'),
+		array(),
+		WPPRS_VERSION,
+		'all' );
+}
+
 function wpprs_getpluginoptions() {
   return get_option(WPPRS_OPTION, array(WPPRS_DEFAULT_ENABLED_NAME => WPPRS_DEFAULT_ENABLED, WPPRS_DEFAULT_NOFOLLOW_NAME => WPPRS_DEFAULT_NOFOLLOW, WPPRS_DEFAULT_SHOW_STARS_NAME => WPPRS_DEFAULT_SHOW_STARS, WPPRS_DEFAULT_CACHETIME_NAME => WPPRS_DEFAULT_CACHETIME, WPPRS_DEFAULT_UID_NAME => WPPRS_DEFAULT_UID, WPPRS_DEFAULT_ROUNDED_NAME => WPPRS_DEFAULT_ROUNDED, WPPRS_DEFAULT_SORT_NAME => WPPRS_DEFAULT_SORT, WPPRS_DEFAULT_NEWWINDOW_NAME => WPPRS_DEFAULT_NEWWINDOW));
 }

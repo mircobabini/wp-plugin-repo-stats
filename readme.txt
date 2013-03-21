@@ -3,7 +3,7 @@ Tags: wordpress, plugin, developer, download, count, rating, stats, rounded
 Requires at least: 3.5
 Tested up to: 3.5.1
 Contributors: jp2112
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NRHAAC7Q9Q2X6
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EX9NB9TLFHVW
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -130,6 +130,11 @@ Add this to your functions.php:
 
 == Changelog ==
 
+= 0.0.6 =
+- sanitize some inputs to reduce attack vectors
+- added donate link on admin page
+- admin page CSS added
+
 = 0.0.5 =
 - moved quicktag script further down the page
 - minor admin page update
@@ -155,6 +160,12 @@ added stars rating, WP logo, changed default cache time to one hour
 created
 
 == Upgrade Notice ==
+
+= 0.0.6 =
+- sanitize some inputs to reduce attack vectors
+- added donate link on admin page
+- admin page CSS added
+- minor admin page tweaks
 
 = 0.0.5 =
 - moved quicktag script further down the page
