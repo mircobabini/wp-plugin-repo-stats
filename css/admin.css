@@ -5,15 +5,17 @@
   font-family: sans-serif, Times, 'Times New Roman', serif;
   font-size: 12pt
 }
+.widefat {
+  width: 70% !important;
+}
 .icon32 {
   position: relative;
-  top: -10px
 }
 #theme-options-wrap input, #theme-options-wrap textarea {
   padding: .7em
 }
-#theme-options-wrap select, #theme-options-wrap input[type="text"] {
-  width: 200px
+#theme-options-wrap select, #theme-options-wrap input[type="text"], #theme-options-wrap input[type="url"] {
+  width: 300px
 }
 #theme-options-wrap th[scope="row"], #theme-options-wrap td {
   vertical-align: middle

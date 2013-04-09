@@ -56,6 +56,8 @@ Also, by default, values are returned, not echoed. You need to explicitly reques
 
 To change defaults on a site-wide basis, go to the Settings page. To change defaults on a per-shortcode basis, pass new values to each shortcode or function call. Priority is given to parameters passed via shortcode or function.
 
+The plugin arguments and default values may change over time. To get the latest list of arguments and defaults, look at the settings page.
+
 = How do I use the plugin? =
 
 Use a shortcode to call the plugin from any page or post like this:
@@ -123,12 +125,31 @@ Add this to your functions.php:
 
 `remove_action('admin_print_footer_scripts', 'add_wpprs_quicktag');`
 
+= I want to remove the admin CSS. =
+
+Add this to your functions.php:
+
+`remove_action('admin_head', 'insert_wpprs_admin_css');`
+
+= I don't want to use the plugin CSS. =
+
+Add this to your functions.php:
+
+`add_action('wp_enqueue_scripts', 'remove_wpprs_style');
+function remove_wpprs_style() {
+  wp_deregister_style('wpprs_style');
+}`
+
 == Screenshots ==
 
 1. Sample screenshot
 2. Settings page
 
 == Changelog ==
+
+= 0.0.8 =
+- minor code refactoring
+- added shortcode defaults display on settings page
 
 = 0.0.7 =
 rollback sanitation
@@ -163,6 +184,10 @@ added stars rating, WP logo, changed default cache time to one hour
 created
 
 == Upgrade Notice ==
+
+= 0.0.8 =
+- minor code refactoring
+- added shortcode defaults display on settings page
 
 = 0.0.7 =
 rollback sanitation
