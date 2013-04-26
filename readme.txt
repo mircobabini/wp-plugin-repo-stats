@@ -42,21 +42,7 @@ To remove this plugin, go to the 'Plugins' menu in WordPress, find the plugin in
 
 = What are the plugin defaults? =
 
-By default, following values are passed to the plugin:
-
-- uid => '' (blank)
-- nofollow => true
-- rounded => false
-- showstars => true
-- cachetime => 3600 (seconds)
-- sortorder => ascending
-- opennewwindow => false
-
-Also, by default, values are returned, not echoed. You need to explicitly request that the plugin output be echoed by passing `'show' => true` in the array when calling the plugin via function.
-
-To change defaults on a site-wide basis, go to the Settings page. To change defaults on a per-shortcode basis, pass new values to each shortcode or function call. Priority is given to parameters passed via shortcode or function.
-
-The plugin arguments and default values may change over time. To get the latest list of arguments and defaults, look at the settings page.
+The plugin arguments and default values may change over time. To get the latest list of arguments and defaults, look at the settings page after installing the plugin.
 
 = How do I use the plugin? =
 
@@ -109,6 +95,10 @@ You might also consider clearing your browser cache and your caching plugin.
 
 Are you using a plugin that minifies CSS? If so, try excluding the plugin CSS file from minification.
 
+= I cleared my cache and still don't see what I want. =
+
+The CSS files include a `?ver` query parameter. This parameter is incremented with every upgrade in order to bust caches. Make sure none of your plugins or functions are stripping this query parameter. Also, if you are using a CDN, flush it or send an invalidation request for the plugin CSS files so that the edge servers request a new copy of it.
+
 = I called the plugin on two different pages with two different cache times, but the cache doesn't refresh as expected. =
 
 The cache is userid-dependent and site-wide. You cannot specify different cache times for the same userid concurrently -- the first shortcode or function call that is made on an empty cache will set the cache time. Ideally you are only displaying the output of this plugin once on your site.
@@ -142,10 +132,16 @@ function remove_wpprs_style() {
 
 == Screenshots ==
 
-1. Sample screenshot
-2. Settings page
+1. Settings page
+2. Screenshot of plugin in action on my site
 
 == Changelog ==
+
+= 0.1.0 =
+- target="_blank" is deprecated, replaced with javascript fallback
+
+= 0.0.9 =
+- minor code refactoring
 
 = 0.0.8 =
 - minor code refactoring
@@ -184,6 +180,12 @@ added stars rating, WP logo, changed default cache time to one hour
 created
 
 == Upgrade Notice ==
+
+= 0.1.0 =
+- target="_blank" is deprecated, replaced with javascript fallback
+
+= 0.0.9 =
+- minor code refactoring
 
 = 0.0.8 =
 - minor code refactoring

@@ -3,13 +3,13 @@
 Plugin Name: WordPress Plugin Repo Stats
 Plugin URI: http://www.jimmyscode.com/wordpress/wp-plugin-repo-stats/
 Description: Plugin developers -- display the names and download counts for your WordPress plugins in a CSS-stylable table. Includes plugin ratings.
-Version: 0.0.8
+Version: 0.1.0
 Author: Jimmy Pe&ntilde;a
 Author URI: http://www.jimmyscode.com/
 License: GPLv2 or later
 */
 // plugin constants
-define('WPPRS_VERSION', '0.0.8');
+define('WPPRS_VERSION', '0.1.0');
 define('WPPRS_PLUGIN_NAME', 'WordPress Plugin Repo Stats');
 define('WPPRS_SLUG', 'wp-plugin-repo-stats');
 define('WPPRS_LOCAL', 'wpprs');
@@ -37,15 +37,6 @@ define('WPPRS_DEFAULT_SORT_NAME', 'sortorder');
 define('WPPRS_DEFAULT_SHOW_NAME', 'show');
 define('WPPRS_DEFAULT_NEWWINDOW_NAME', 'opennewwindow');
 
-// add custom quicktag for post editor
-add_action('admin_print_footer_scripts', 'add_wpprs_quicktag', 100);
-function add_wpprs_quicktag() {
-?>
-<script>
-QTags.addButton('wpprs', 'Plugin Repo Stats', '[plugin-repo-stats]', '', '', 'display WP Plugin Repo Stats', '' );
-</script>
-<?php }
-
 // localization to allow for translations
 // also, register the plugin CSS file for later inclusion
 add_action('init', 'wpprs_translation_file');
@@ -60,6 +51,7 @@ add_action('admin_init', 'wpprs_options_init');
 function wpprs_options_init() {
   register_setting('wpprs_options', WPPRS_OPTION, 'wpprs_validation');
   register_wpprs_admin_style();
+	register_wpprs_admin_script();
 }
 // validation function
 function wpprs_validation($input) {
@@ -95,7 +87,7 @@ function wpprs_page() {
     <?php screen_icon(); ?>
     <h2><?php echo WPPRS_PLUGIN_NAME; ?></h2>
     <form method="post" action="options.php">
-      <?php submit_button(); ?>
+      <div>You are running plugin version <strong><?php echo WPPRS_VERSION; ?></strong>.</div>
       <?php settings_fields('wpprs_options'); ?>
       <?php $options = wpprs_getpluginoptions(); ?>
       <?php update_option(WPPRS_OPTION, $options); ?>
@@ -133,10 +125,10 @@ function wpprs_page() {
 		</select></td>
 	  </tr>
 	  <tr valign="top"><td colspan="2"><?php _e('Select the sort order. Default is ascending (by plugin name).', WPPRS_LOCAL); ?></td></tr>
-        <tr valign="top"><th scope="row"><strong><label title="<?php _e('Check this box to open links in a new window. target="_blank" will be added to all links', WPPRS_LOCAL); ?>" for="wpprs[<?php echo WPPRS_DEFAULT_NEWWINDOW_NAME; ?>]"><?php _e('Open links in new window?', WPPRS_LOCAL); ?></label></strong></th>
+        <tr valign="top"><th scope="row"><strong><label title="<?php _e('Check this box to open links in a new window.', WPPRS_LOCAL); ?>" for="wpprs[<?php echo WPPRS_DEFAULT_NEWWINDOW_NAME; ?>]"><?php _e('Open links in new window?', WPPRS_LOCAL); ?></label></strong></th>
 	    <td><input type="checkbox" id="wpprs[<?php echo WPPRS_DEFAULT_NEWWINDOW_NAME; ?>]" name="wpprs[<?php echo WPPRS_DEFAULT_NEWWINDOW_NAME; ?>]" value="1" <?php checked('1', $options[WPPRS_DEFAULT_NEWWINDOW_NAME]); ?> /></td>
         </tr>
-	  <tr valign="top"><td colspan="2"><?php _e('Check this box to open links in a new window. target="_blank" will be added to all links', WPPRS_LOCAL); ?></td></tr>
+	  <tr valign="top"><td colspan="2"><?php _e('Check this box to open links in a new window.', WPPRS_LOCAL); ?></td></tr>
       </table>
       <?php submit_button(); ?>
     </form>
@@ -350,7 +342,7 @@ function wpprs($atts) {
       $output = '<div class="wpprs">';
       $output .= '<div class="wpprs-top' . ($rounded ? ' wpprs-rounded-corners' : '') . '">';
       $output .= '<h2>' . $sum . '</h2>';
-      $output .= __('The number of times my ', WPPRS_LOCAL) . '<span class="wpprs-plugincount">' . $plugincount . '</span> ' . __('WordPress plugins have been downloaded according to the official ', WPPRS_LOCAL) . '<a' . ($opennewwindow ? ' target="_blank" ' : ' ') . ($nofollow ? ' rel="nofollow" ' : ' ') . 'href="http://wordpress.org/extend/plugins/">' . __('WordPress Plugins Repository', WPPRS_LOCAL) . '</a>.';
+      $output .= __('The number of times my ', WPPRS_LOCAL) . '<span class="wpprs-plugincount">' . $plugincount . '</span> ' . __('WordPress plugins have been downloaded according to the official ', WPPRS_LOCAL) . '<a' . ($opennewwindow ? ' onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" ' : ' ') . ($nofollow ? ' rel="nofollow" ' : ' ') . 'href="http://wordpress.org/extend/plugins/">' . __('WordPress Plugins Repository', WPPRS_LOCAL) . '</a>.';
       $output .= '</div> <!-- end wpprs-top -->';
       $output .= '<div class="wpprs-body">';
 	$output .= '<h3 class="wp-logo">' . __('My WordPress Plugins', WPPRS_LOCAL) . '</h3>';
@@ -384,7 +376,7 @@ function wpprs($atts) {
         $output .= '<tr' . ($i % 2 != 0 ? ' class="wpprs-evenrow" ' : ' class="wpprs-oddrow" ') . '>';
 				$output .= '<td class="wpprs-index">' . ($i + 1) . '</td>';
         // plugin URL and name
-        $pluginurl = '<a' . ($opennewwindow ? ' target="_blank" ' : ' ') . ($nofollow ? ' rel="nofollow" ' : ' ') . 'href="' . $outputarray[$i][1] . '">' . $outputarray[$i][0] . '</a>';
+        $pluginurl = '<a' . ($opennewwindow ? ' onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" ' : ' ') . ($nofollow ? ' rel="nofollow" ' : ' ') . 'href="' . $outputarray[$i][1] . '">' . $outputarray[$i][0] . '</a>';
         $output .= '<td class="wpprs-name">' . $pluginurl . '</td>';
         // download count for that plugin
 				$output .= '<td class="wpprs-count">' . $outputarray[$i][2] . '</td>';
@@ -491,6 +483,20 @@ function register_wpprs_admin_style() {
 		array(),
 		WPPRS_VERSION,
 		'all' );
+}
+// enqueue/register the admin JS file
+add_action('admin_enqueue_scripts', 'wpprs_ed_buttons');
+function wpprs_ed_buttons($hook) {
+  if (($hook == 'post-new.php') || ($hook == 'post.php')) {
+    wp_enqueue_script('wpprs_add_editor_button');
+  }
+}
+function register_wpprs_admin_script() {
+  wp_register_script('wpprs_add_editor_button',
+    plugins_url(plugin_basename(dirname(__FILE__)) . '/js/editor_button.js'), 
+    array('quicktags'), 
+    WPPRS_VERSION, 
+    true);
 }
 // when plugin is activated, create options array and populate with defaults
 register_activation_hook(__FILE__, 'wpprs_activate');
