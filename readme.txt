@@ -137,6 +137,9 @@ function remove_wpprs_style() {
 
 == Changelog ==
 
+= 0.1.1 =
+minor admin code update
+
 = 0.1.0 =
 - target="_blank" is deprecated, replaced with javascript fallback
 
@@ -180,6 +183,9 @@ added stars rating, WP logo, changed default cache time to one hour
 created
 
 == Upgrade Notice ==
+
+= 0.1.1 =
+minor admin code update
 
 = 0.1.0 =
 - target="_blank" is deprecated, replaced with javascript fallback

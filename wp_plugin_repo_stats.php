@@ -3,13 +3,13 @@
 Plugin Name: WordPress Plugin Repo Stats
 Plugin URI: http://www.jimmyscode.com/wordpress/wp-plugin-repo-stats/
 Description: Plugin developers -- display the names and download counts for your WordPress plugins in a CSS-stylable table. Includes plugin ratings.
-Version: 0.1.0
+Version: 0.1.1
 Author: Jimmy Pe&ntilde;a
 Author URI: http://www.jimmyscode.com/
 License: GPLv2 or later
 */
 // plugin constants
-define('WPPRS_VERSION', '0.1.0');
+define('WPPRS_VERSION', '0.1.1');
 define('WPPRS_PLUGIN_NAME', 'WordPress Plugin Repo Stats');
 define('WPPRS_SLUG', 'wp-plugin-repo-stats');
 define('WPPRS_LOCAL', 'wpprs');
@@ -275,7 +275,7 @@ function wpprs($atts) {
         $sortorder = WPPRS_DEFAULT_SORT;
       }
     }
-    wp_enqueue_style('wpprs_style');
+    wpprs_styles();
     $querypath = '//div[@class="info-group plugin-theme main-plugins"]//';
     $transient_name = 'wpprs_count_' . $uid;
     $response = get_transient($transient_name);
