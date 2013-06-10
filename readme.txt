@@ -27,6 +27,14 @@ Inspired by http://www.viper007bond.com/wordpress-plugins/wordpress-download-cou
 
 Requires WordPress 3.5 due to use of transients for caching.
 
+= Shortcode =
+
+To display on any post or page, use this shortcode:
+
+[plugin-repo-stats]
+
+Make sure you go to the plugin settings page after installing to set options.
+
 <strong>If you use and enjoy this plugin, please rate it and click the "Works" button below so others know that it works with the latest version of WordPress.</strong>
 
 == Installation ==
@@ -48,7 +56,7 @@ The plugin arguments and default values may change over time. To get the latest 
 
 Use a shortcode to call the plugin from any page or post like this:
 
-[plugin-repo-stats]
+`[plugin-repo-stats]`
 
 This will:
 <ul>
@@ -137,6 +145,9 @@ function remove_wpprs_style() {
 
 == Changelog ==
 
+= 0.1.2 =
+some security hardening added
+
 = 0.1.1 =
 minor admin code update
 
@@ -183,6 +194,9 @@ added stars rating, WP logo, changed default cache time to one hour
 created
 
 == Upgrade Notice ==
+
+= 0.1.2 =
+some security hardening added
 
 = 0.1.1 =
 minor admin code update
