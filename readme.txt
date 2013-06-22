@@ -1,7 +1,7 @@
 === WP Plugin Repo Stats ===
 Tags: wordpress, plugin, developer, download, count, rating, stats, rounded
 Requires at least: 3.5
-Tested up to: 3.5.1
+Tested up to: 3.5.2
 Contributors: jp2112
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EX9NB9TLFHVW
 Stable tag: trunk
@@ -138,12 +138,22 @@ function remove_wpprs_style() {
   wp_deregister_style('wpprs_style');
 }`
 
+= I don't see the plugin toolbar button(s). =
+
+This plugin adds one or more toolbar buttons to the HTML editor. You will not see them on the Visual editor.
+
+The label on the toolbar button is "Plugin Repo Stats".
+
 == Screenshots ==
 
 1. Settings page
 2. Screenshot of plugin in action on my site
 
 == Changelog ==
+
+= 0.1.3 =
+- updated the plugin settings page list of parameters to indicate whether they are required or not
+- updated FAQ section of readme.txt
 
 = 0.1.2 =
 some security hardening added
@@ -194,6 +204,10 @@ added stars rating, WP logo, changed default cache time to one hour
 created
 
 == Upgrade Notice ==
+
+= 0.1.3 =
+- updated the plugin settings page list of parameters to indicate whether they are required or not
+- updated FAQ section of readme.txt
 
 = 0.1.2 =
 some security hardening added

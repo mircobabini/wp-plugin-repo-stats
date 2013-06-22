@@ -3,13 +3,13 @@
 Plugin Name: WordPress Plugin Repo Stats
 Plugin URI: http://www.jimmyscode.com/wordpress/wp-plugin-repo-stats/
 Description: Plugin developers -- display the names and download counts for your WordPress plugins in a CSS-stylable table. Includes plugin ratings.
-Version: 0.1.2
+Version: 0.1.3
 Author: Jimmy Pe&ntilde;a
 Author URI: http://www.jimmyscode.com/
 License: GPLv2 or later
 */
 // plugin constants
-define('WPPRS_VERSION', '0.1.2');
+define('WPPRS_VERSION', '0.1.3');
 define('WPPRS_PLUGIN_NAME', 'WordPress Plugin Repo Stats');
 define('WPPRS_SLUG', 'wp-plugin-repo-stats');
 define('WPPRS_LOCAL', 'wpprs');
@@ -141,25 +141,30 @@ function wpprs_page() {
     <table class="widefat">
       <thead>
         <tr>
-          <th>Argument</th>
-	    <th>Type</th>
-          <th>Default Value</th>
+          <th title="<?php _e('The name of the parameter', WPPRS_LOCAL); ?>"><?php _e('Argument', WPPRS_LOCAL); ?></th>
+	  <th title="<?php _e('Is this parameter required?', WPPRS_LOCAL); ?>"><?php _e('Required?', WPPRS_LOCAL); ?></th>
+          <th title="<?php _e('What data type this parameter accepts', WPPRS_LOCAL); ?>"><?php _e('Type', WPPRS_LOCAL); ?></th>
+          <th title="<?php _e('What, if any, is the default if no value is specified', WPPRS_LOCAL); ?>"><?php _e('Default Value', WPPRS_LOCAL); ?></th>
         </tr>
       </thead>
       <tbody>
-    <?php $plugin_defaults = wpprs_shortcode_defaults(); foreach($plugin_defaults as $key => $value) { ?>
+    <?php $plugin_defaults_keys = array_keys(wpprs_shortcode_defaults());
+					$plugin_defaults_values = array_values(wpprs_shortcode_defaults());
+					$wpprs_required = wpprs_required_parameters();
+					for($i=0; $i<count($plugin_defaults_keys);$i++) { ?>
         <tr>
-          <td><?php echo $key; ?></td>
-	    <td><?php echo gettype($value); ?></td>
-          <td> <?php 
-						if ($value === true) {
+          <td><?php echo $plugin_defaults_keys[$i]; ?></td>
+					<td><?php echo $wpprs_required[$i]; ?></td>
+          <td><?php echo gettype($plugin_defaults_values[$i]); ?></td>
+          <td><?php 
+						if ($plugin_defaults_values[$i] === true) {
 							echo 'true';
-						} elseif ($value === false) {
+						} elseif ($plugin_defaults_values[$i] === false) {
 							echo 'false';
-						} elseif ($value === '') {
+						} elseif ($plugin_defaults_values[$i] === '') {
 							echo '<em>(this value is blank by default)</em>';
 						} else {
-							echo $value;
+							echo $plugin_defaults_values[$i];
 						} ?></td>
         </tr>
     <?php } ?>
@@ -525,6 +530,19 @@ function wpprs_shortcode_defaults() {
   WPPRS_DEFAULT_SORT_NAME => WPPRS_DEFAULT_SORT, 
   WPPRS_DEFAULT_NEWWINDOW_NAME => WPPRS_DEFAULT_NEWWINDOW, 
   WPPRS_DEFAULT_SHOW_NAME => WPPRS_DEFAULT_SHOW
+  );
+}
+// function to return parameter status (required or not)
+function wpprs_required_parameters() {
+  return array(
+    'true',
+    'false',
+    'false',
+    'false',
+    'false',
+    'false',
+    'false',
+    'false'
   );
 }
 ?>
