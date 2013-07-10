@@ -151,6 +151,9 @@ The label on the toolbar button is "Plugin Repo Stats".
 
 == Changelog ==
 
+= 0.1.4 =
+fixed uninstall routine, actually deletes options now
+
 = 0.1.3 =
 - updated the plugin settings page list of parameters to indicate whether they are required or not
 - updated FAQ section of readme.txt
@@ -204,6 +207,9 @@ added stars rating, WP logo, changed default cache time to one hour
 created
 
 == Upgrade Notice ==
+
+= 0.1.4 =
+fixed uninstall routine, actually deletes options now
 
 = 0.1.3 =
 - updated the plugin settings page list of parameters to indicate whether they are required or not
