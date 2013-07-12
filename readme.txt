@@ -151,6 +151,10 @@ The label on the toolbar button is "Plugin Repo Stats".
 
 == Changelog ==
 
+= 0.1.5 =
+- added dynamic wording if only one plugin available
+- added div class wrapped around the "Number of times my WordPress plugins have been downloaded" sentence so it can be hidden via CSS
+
 = 0.1.4 =
 fixed uninstall routine, actually deletes options now
 
@@ -207,6 +211,10 @@ added stars rating, WP logo, changed default cache time to one hour
 created
 
 == Upgrade Notice ==
+
+= 0.1.5 =
+- added dynamic wording if only one plugin available
+- added div class wrapped around the "Number of times my WordPress plugins have been downloaded" sentence so it can be hidden via CSS
 
 = 0.1.4 =
 fixed uninstall routine, actually deletes options now

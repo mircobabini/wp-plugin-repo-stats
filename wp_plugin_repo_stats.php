@@ -3,13 +3,13 @@
 Plugin Name: WordPress Plugin Repo Stats
 Plugin URI: http://www.jimmyscode.com/wordpress/wp-plugin-repo-stats/
 Description: Plugin developers -- display the names and download counts for your WordPress plugins in a CSS-stylable table. Includes plugin ratings.
-Version: 0.1.4
+Version: 0.1.5
 Author: Jimmy Pe&ntilde;a
 Author URI: http://www.jimmyscode.com/
 License: GPLv2 or later
 */
 // plugin constants
-define('WPPRS_VERSION', '0.1.4');
+define('WPPRS_VERSION', '0.1.5');
 define('WPPRS_PLUGIN_NAME', 'WordPress Plugin Repo Stats');
 define('WPPRS_SLUG', 'wp-plugin-repo-stats');
 define('WPPRS_LOCAL', 'wpprs');
@@ -358,7 +358,7 @@ function wpprs($atts) {
       $output = '<div class="wpprs">';
       $output .= '<div class="wpprs-top' . ($rounded ? ' wpprs-rounded-corners' : '') . '">';
       $output .= '<h2>' . $sum . '</h2>';
-      $output .= __('The number of times my ', WPPRS_LOCAL) . '<span class="wpprs-plugincount">' . $plugincount . '</span> ' . __('WordPress plugins have been downloaded according to the official ', WPPRS_LOCAL) . '<a' . ($opennewwindow ? ' onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" ' : ' ') . ($nofollow ? ' rel="nofollow" ' : ' ') . 'href="http://wordpress.org/extend/plugins/">' . __('WordPress Plugins Repository', WPPRS_LOCAL) . '</a>.';
+      $output .= '<div class="wpprs-dl-count">' . __('The number of times my ', WPPRS_LOCAL) . '<span class="wpprs-plugincount">' . $plugincount . '</span> ' . __('WordPress', WPPRS_LOCAL) . __(($plugincount == 1) ? ' plugin has ' : ' plugins have ') . __('been downloaded according to the official ', WPPRS_LOCAL) . '<a' . ($opennewwindow ? ' onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" ' : ' ') . ($nofollow ? ' rel="nofollow" ' : ' ') . 'href="http://wordpress.org/extend/plugins/">' . __('WordPress Plugins Repository', WPPRS_LOCAL) . '</a>.</div>';
       $output .= '</div> <!-- end wpprs-top -->';
       $output .= '<div class="wpprs-body">';
 	$output .= '<h3 class="wp-logo">' . __('My WordPress Plugins', WPPRS_LOCAL) . '</h3>';
