@@ -1,7 +1,7 @@
 === WP Plugin Repo Stats ===
 Tags: wordpress, plugin, developer, download, count, rating, stats, rounded
 Requires at least: 3.5
-Tested up to: 3.5.2
+Tested up to: 3.7.1
 Contributors: jp2112
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EX9NB9TLFHVW
 Stable tag: trunk
