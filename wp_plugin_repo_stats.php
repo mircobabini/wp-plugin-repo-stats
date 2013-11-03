@@ -482,8 +482,8 @@ function wpprs_plugin_settings_link($links) {
   return $links; 
 }
 // http://wpengineer.com/1295/meta-links-for-wordpress-plugins/
-add_filter('plugin_row_meta', 'meta_links', 10, 2);
-function meta_links($links, $file) {
+add_filter('plugin_row_meta', 'wpprs_meta_links', 10, 2);
+function wpprs_meta_links($links, $file) {
   $plugin = plugin_basename(__FILE__);
   // create link
   if ($file == $plugin) {
